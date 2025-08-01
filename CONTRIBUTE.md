@@ -97,7 +97,7 @@ CLOUDINARY_SECRET=your_cloudinary_api_secret
 ```
 🚫 Do not commit your .env file or share sensitive values publicly.
 
-💬 If you're unsure about what to fill, feel free to ask a maintainer or check the project documentation. give this in code format
+💬 If you're unsure about what to fill, feel free to ask a maintainer or check the project documentation. 
 
 ---
 
