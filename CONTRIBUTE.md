@@ -83,8 +83,21 @@ VITE_CLIENT_ID=your-client-id-here
 ![.env Configuration Screenshot](./docs/env-setup.png)
 
 ##### For Backend `.env`:
-- Follow the template in `.env.example`
-- Fill values based on backend requirements or coordinate with a maintainer.
+
+- Copy the `.env.example` file in the backend directory and rename it to `.env`.
+- Fill in the required values as shown below:
+
+```env
+MONGODB_URI=your_mongo_connection_string
+PORT=3000
+JWT_SECRET=your_jwt_secret
+CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_KEY=your_cloudinary_api_key
+CLOUDINARY_SECRET=your_cloudinary_api_secret
+```
+🚫 Do not commit your .env file or share sensitive values publicly.
+
+💬 If you're unsure about what to fill, feel free to ask a maintainer or check the project documentation. give this in code format
 
 ---
 
