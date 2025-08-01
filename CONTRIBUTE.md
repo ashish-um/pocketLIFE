@@ -36,8 +36,6 @@ git clone https://github.com/<your-username>/pocketLIFE.git
 cd pocketLIFE
 ```
 
-Replace `<your-username>` with your actual GitHub username.
-
 ---
 
 ### 🌱 4. Create a New Branch
@@ -45,8 +43,6 @@ Replace `<your-username>` with your actual GitHub username.
 ```bash
 git checkout -b feature/<your-branch-name>
 ```
-
-Use a meaningful name like `feature/encrypt-aes` or `fix/responsive-layout`.
 
 ---
 
