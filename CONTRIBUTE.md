@@ -6,6 +6,16 @@ We’re excited to have you here! This guide will help you contribute smoothly a
 
 ---
 
+### ⚙️ Prerequisites
+
+Make sure the following are installed before setting up the project:
+
+- [Node.js](https://nodejs.org/) (v16 or later)
+- [npm](https://www.npmjs.com/) 
+- [Git](https://git-scm.com/)
+
+---
+
 ## 🛠️ How to Contribute
 
 ### ⭐ 1. Star and Fork the Repository
@@ -22,33 +32,67 @@ We’re excited to have you here! This guide will help you contribute smoothly a
 ### 📥 3. Clone Your Fork Locally
 
 ```bash
-git clone https://github.com/your-username/pocketLIFE.git
+git clone https://github.com/<your-username>/pocketLIFE.git
 cd pocketLIFE
 ```
 
-Replace `your-username` with your actual GitHub username.
+Replace `<your-username>` with your actual GitHub username.
+
+---
 
 ### 🌱 4. Create a New Branch
 
 ```bash
-git checkout -b feature/your-branch-name
+git checkout -b feature/<your-branch-name>
 ```
 
-Use a meaningful branch name like `feature/encrypt-aes` or `fix/responsive-layout`.
+Use a meaningful name like `feature/encrypt-aes` or `fix/responsive-layout`.
 
 ---
 
-## ✏️ 5. Make Your Changes
+### ✏️ 5. Make Your Changes
 
 - Stick to clean, well-commented code.
-- Follow any project conventions or standards.
-- Make sure your changes do not break existing features.
-
-> _Tip: Refer to the TODOs in the README for ideas on what to work on._
+- Follow project-specific conventions.
+- Make sure your changes **do not break** existing functionality.
 
 ---
 
-## ✅ 6. Stage & Commit Your Work
+### 🧪 6. Set Up Environment Variables
+
+To run the project locally, you’ll need to configure environment variables for both frontend and backend.
+
+#### ✅ Use `.env.example`:
+
+Both frontend and backend have a `.env.example` file. Copy and rename them as:
+
+```bash
+cp .env.example .env
+```
+
+#### 🔐 Where to Get Environment Variables
+
+##### For `VITE_CLIENT_ID` (Frontend):
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Navigate to **APIs & Services > Credentials**
+3. Click **Create Credentials > OAuth client ID**
+4. Use the Client ID in `.env` file like so:
+
+```env
+VITE_CLIENT_ID=your-client-id-here
+```
+
+🖼️ Refer to the screenshot below for exact `.env` configuration details:
+
+![.env Configuration Screenshot](./docs/env-setup.png)
+
+##### For Backend `.env`:
+- Follow the template in `.env.example`
+- Fill values based on backend requirements or coordinate with a maintainer.
+
+---
+
+### ✅ 7. Stage & Commit Your Work
 
 ```bash
 git status
@@ -58,27 +102,20 @@ git commit -m "Add: [feature description] or Fix: [bug description]"
 
 ---
 
-## 🚀 7. Push to GitHub
+### 🚀 8. Push to GitHub
 
 ```bash
-git push origin feature/your-branch-name
+git push origin feature/<your-branch-name>
 ```
 
 ---
 
-## 🔁 8. Create a Pull Request (PR)
+### 🔁 9. Create a Pull Request (PR)
 
 - Open your fork on GitHub.
 - Click **"Compare & pull request"**.
-- Give a clear title and description of what you’ve changed.
-- Submit your PR and wait for a review.
-
----
-
-## ⏳ 9. Wait for Review
-
-- The maintainers will review your PR.
-- You may be asked to make some changes — don’t worry, it’s all part of the process!
+- Provide a meaningful title and description.
+- Submit your PR and wait for review.
 
 ---
 
@@ -86,37 +123,32 @@ git push origin feature/your-branch-name
 
 ### 🧠 Tech Stack
 
-PocketLIFE is a browser-based journaling tool built using:
-- **Frontend:** HTML, CSS, JavaScript (likely with a modern library)
-- **Future Plans:** AES encryption, Google Drive integration, image uploads, and more!
+PocketLIFE is a browser-based journaling tool built with:
 
-If you're unsure about setup or need any help, feel free to comment on the issue thread or ask in discussions.
-
----
-
-### 🧪 To Run Locally
-
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-2. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-3. Open your browser at: [http://localhost:3000](http://localhost:3000)
-
-> ⚠️ Make sure your code runs correctly on your local machine before submitting a PR.
+- **Frontend:** HTML, CSS, JavaScript (likely with Vite)
+- **Backend:** Node.js / Express (assumed)
+- **Planned Features:** AES encryption, Google Drive sync, image uploads
 
 ---
 
-### 🔄 Keep Your Fork Updated
+### 🧪 Running Locally
 
-To avoid conflicts:
+1. Install dependencies:
+```bash
+npm install
+```
+2. Start the development server:
+```bash
+npm run dev
+```
+3. Open in browser:
+[http://localhost:3000](http://localhost:3000)
 
-1. Go to your fork on GitHub.
-2. If it’s behind the main repo, you’ll see a **"Sync fork"** button — click it and update.
-3. Alternatively, sync via CLI:
+> ⚠️ Make sure your `.env` is set up correctly before running.
+
+---
+
+### 🔄 Keeping Your Fork Updated
 
 ```bash
 git remote add upstream https://github.com/ashish-um/pocketLIFE.git
@@ -127,13 +159,17 @@ git merge upstream/main
 
 ---
 
-### 🤝 Code of Conduct
+## 🙌 Thank You!
 
-We’re committed to fostering a welcoming and respectful environment for everyone.
-
-➡️ A `CODE_OF_CONDUCT.md` will soon be added to this repository. Until then, please be respectful and considerate in your interactions.
+Your contribution is truly appreciated. Let’s build something amazing together! 💙
 
 ---
 
-Thank you again for being part of this project! 💙  
-Your efforts are truly appreciated.
+### 📌 Project-Specific Best Practices
+
+- Never hardcode API keys or secrets in your code.
+- Use environment variables via `.env` files.
+- Follow the structure provided in `.env.example` for both frontend and backend.
+- Name your branches clearly using prefixes like `feature/` or `fix/`.
+- Keep your code clean and follow existing formatting/styles.
+- Test your changes locally before submitting a PR.
