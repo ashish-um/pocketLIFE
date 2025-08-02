@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true,
+        required: true,  
     },
-    email:{
+    email: {
         type: String,
-        require
+        required: true, 
     },
-    image:{
+    image: {
         type: String,
-        require
+        required: true,  
     },
-    time:{
-        type: Date, 
+    time: {
+        type: Date,
         default: Date.now,
     }
-})
+});
 
-module.exports = mongoose.model('users', UserSchema);
+module.exports = mongoose.model('User', UserSchema);  
