@@ -85,7 +85,8 @@ VITE_CLIENT_ID=your-client-id-here
 ##### For Backend `.env`:
 
 - Copy the `.env.example` file in the backend directory and rename it to `.env`.
-- Fill in the required values as shown below:
+- 🟢 Most required values are already pre-filled in `.env.example` to help new contributors get started quickly.
+- Fill in the remaining values as shown below:
 
 ```env
 MONGODB_URI=your_mongo_connection_string
