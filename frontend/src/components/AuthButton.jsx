@@ -64,18 +64,21 @@ function AuthButton() {
     },
   });
 
+  // This is the corrected code
   const loggedIN = (
     <div>
-      <img
-        onClick={(event) => menuRight.current.toggle(event)}
-        aria-controls="popup_menu_right"
-        aria-haspopup
-        style={{ borderRadius: "100%" }}
-        width={50}
-        height={50}
-        src={localStorage.getItem("image") || ""}
-        alt=""
-      />
+      {localStorage.getItem("image") && (
+        <img
+          onClick={(event) => menuRight.current.toggle(event)}
+          aria-controls="popup_menu_right"
+          aria-haspopup
+          style={{ borderRadius: "100%" }}
+          width={50}
+          height={50}
+          src={localStorage.getItem("image")}
+          alt="User Profile"
+        />
+      )}
       <Menu
         model={items}
         popup
@@ -85,6 +88,7 @@ function AuthButton() {
       />
     </div>
   );
+  
   return (
     <div>
       <Toast ref={toast} />

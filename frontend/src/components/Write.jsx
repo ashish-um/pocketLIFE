@@ -44,30 +44,33 @@ function Write() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URI}/date?date=${date}`, {
-        headers: {
-          Authorization: cookies.access_token,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        const { title, content, image, mood } = res.data;
-        setTitleVal(title);
-        setSelectedMood(mood);
-        setDescVal(content);
-        setImage(image);
-      })
-      .catch(() => {
-        setTitleVal("Provide A Title");
-        setDescVal("Provide A Desc");
-        setSelectedMood(2);
-        setImage(
-          "https://images.stockcake.com/public/f/6/2/f6200ac6-9e40-4081-a36d-51b45ead18c4_large/antique-journal-collection-stockcake.jpg"
-        );
-        // showWarn()
-      });
-  }, [date]);
+    // FIX: Only make the API call if a token exists
+    if (cookies.access_token) {
+        axios
+          .get(`${import.meta.env.VITE_BACKEND_URI}/date?date=${date}`, {
+            headers: {
+              Authorization: cookies.access_token,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            const { title, content, image, mood } = res.data;
+            setTitleVal(title);
+            setSelectedMood(mood);
+            setDescVal(content);
+            setImage(image);
+          })
+          .catch(() => {
+            setTitleVal("Provide A Title");
+            setDescVal("Provide A Desc");
+            setSelectedMood(2);
+            setImage(
+              "https://images.stockcake.com/public/f/6/2/f6200ac6-9e40-4081-a36d-51b45ead18c4_large/antique-journal-collection-stockcake.jpg"
+            );
+            // showWarn()
+          });
+    }
+  }, [date, cookies.access_token]); // FIX: Add cookies.access_token as a dependency
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -167,8 +170,8 @@ function Write() {
           <label
             onDragOver={(event) => event.preventDefault()}
             onDrop={handleDrop}
-            for="myFile"
-            class="custom-file-upload"
+            htmlFor="myFile"
+            className="custom-file-upload"
           >
             <img
               src={imageVal}
