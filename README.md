@@ -33,6 +33,10 @@ It's a place to keep your daily treasures—the funny jokes, the *big dreams*, t
 
 We love our contributors! If you'd like to help, please check out our [`CONTRIBUTING.md`](https://github.com/ashish-um/pocketLIFE/blob/main/CONTRIBUTE.md) file for guidelines.
 
+<a href="https://github.com/ashish-um/pocketLIFE/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ashish-um/pocketLIFE" />
+</a>
+
 ## ⭐ If You Like This Project, Please Star It!
 
 Found this project helpful or believe in our mission? <mark>A single star can make a big difference!</mark> It helps other developers discover the project and motivates our community to keep creating.
