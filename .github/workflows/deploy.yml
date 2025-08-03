@@ -24,14 +24,12 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: |
-          npm ci
-          working-directory: ./frontend
+        run: npm ci
+        working-directory: ./frontend
 
       - name: Build project
-        run: |
-          npm run build --if-present
-          working-directory: ./frontend
+        run: npm run build --if-present
+        working-directory: ./frontend
 
       - run: npm install -g gh-pages
 
