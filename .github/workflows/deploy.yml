@@ -23,20 +23,29 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
+          cache-dependency-path: frontend/package-lock.json
+
       - name: Install dependencies
-        run: npm ci
         working-directory: ./frontend
+        run: npm ci
 
       - name: Build project
-        run: npm run build --if-present
         working-directory: ./frontend
+        run: npm run build --if-present
 
-      - run: npm install -g gh-pages
+      - name: Install gh-pages
+        run: npm install -g gh-pages
 
       - name: Deploy with gh-pages
         run: |
-          git remote set-url origin https://git:${GH_PAT}@github.com/${GITHUB_REPOSITORY}.git
-          cd frontend
-          npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
+          # Configure git with the PAT so it can push
+          git config --global user.name "github-actions-bot"
+          git config --global user.email "support+actions@github.com"
+          git remote set-url origin https://git:${{ secrets.GH_PAT }}@github.com/${{ GITHUB_REPOSITORY }}.git
+          
+          # Run the deploy script from the root, but tell gh-pages where the build folder is
+          # This assumes your package.json script is: "deploy": "gh-pages -d build"
+          # We add the --prefix flag to tell npm to run the script from the 'frontend' package.json
+          npm run deploy --prefix frontend
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
