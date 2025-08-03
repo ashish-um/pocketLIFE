@@ -31,7 +31,7 @@ It's a place to keep your daily treasures—the funny jokes, the *big dreams*, t
 
 ## 🤝 Contributing
 
-We love our contributors! If you'd like to help, please check out our `CONTRIBUTING.md` file for guidelines (its being worked upon, presently).
+We love our contributors! If you'd like to help, please check out our [`CONTRIBUTING.md`](https://github.com/ashish-um/pocketLIFE/blob/main/CONTRIBUTE.md) file for guidelines.
 
 ## ⭐ If You Like This Project, Please Star It!
 
