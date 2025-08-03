@@ -29,7 +29,7 @@ It's a place to keep your daily treasures—the funny jokes, the *big dreams*, t
 - [ ] Making it responsive
 - [ ] Ability to add more images in each day
 
-## 🤝 Contributing
+## 🤝 Contributing:
 
 We love our contributors! If you'd like to help, please check out our [`CONTRIBUTING.md`](https://github.com/ashish-um/pocketLIFE/blob/main/CONTRIBUTE.md) file for guidelines.
 
