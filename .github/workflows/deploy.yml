@@ -41,10 +41,8 @@ jobs:
           # Configure git with the PAT so it can push
           git config --global user.name "github-actions-bot"
           git config --global user.email "support+actions@github.com"
-          git remote set-url origin https://git:${{ secrets.GH_PAT }}@github.com/${{ GITHUB_REPOSITORY }}.git
+          git remote set-url origin https://git:${GH_PAT}@github.com/${GITHUB_REPOSITORY}.git
           
-          # Run the deploy script from the root, but tell gh-pages where the build folder is
-          # This assumes your package.json script is: "deploy": "gh-pages -d build"
           # We add the --prefix flag to tell npm to run the script from the 'frontend' package.json
           npm run deploy --prefix frontend
         env:
