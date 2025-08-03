@@ -8,7 +8,7 @@ Welcome! Whether you're fixing a bug, adding features, or improving docs — you
 
 Install the following before setting up the project:
 
-- Node.js (v16+)
+- Node.js (v18+)
 - npm
 - Git
 
