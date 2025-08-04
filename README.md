@@ -5,6 +5,17 @@
 
 A beautiful and simple space to capture your daily thoughts, moments, and memories. This project is a digital journal designed for everyone to document their life's journey, one day at a time.
 > Site live at: https://ashish-um.github.io/pocketLIFE
+<br>
+<p>
+  <a href="https://youtu.be/DNVkGx7JpL4" title="Watch the video">
+    <img src="https://i.ytimg.com/vi/DNVkGx7JpL4/maxresdefault.jpg" alt="Watch the video" width="600">
+  </a>
+  <br>
+  <a href="https://youtu.be/DNVkGx7JpL4" title="Watch on YouTube" style="text-decoration: none;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/32px-YouTube_full-color_icon_%282017%29.svg.png" alt="YouTube Logo" height="14" style="vertical-align: middle;">
+    <b style="vertical-align: middle; margin-left: 5px;">Watch The Full Video on YouTube</b>
+  </a>
+</p>
 
 ## 💡 IDEOLOGY
 
@@ -31,7 +42,7 @@ It's a place to keep your daily treasures—the funny jokes, the *big dreams*, t
 
 ## 🤝 Contributing:
 
-We love our contributors! If you'd like to help, please check out our [`CONTRIBUTING.md`](https://github.com/ashish-um/pocketLIFE/blob/main/CONTRIBUTE.md) file for guidelines.
+We love our contributors! If you'd like to help, please check out our [`CONTRIBUTE.md`](https://github.com/ashish-um/pocketLIFE/blob/main/CONTRIBUTE.md) file for guidelines.
 
 <a href="https://github.com/ashish-um/pocketLIFE/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=ashish-um/pocketLIFE" />
