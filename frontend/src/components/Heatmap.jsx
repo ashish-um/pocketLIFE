@@ -76,7 +76,8 @@ function Heatmap() {
   return (
     <>
       <Tooltip id="myid" />
-      <div id="heatmap-container" className="container">
+      <div id="heatmap-scroll-outer">
+        <div id="heatmap-scroll-inner" className ="container">
         <CalendarHeatmap
           startDate={shiftDate(today, -365)}
           endDate={today}
@@ -89,7 +90,7 @@ function Heatmap() {
             }
             return `color-box-${value.count}`;
           }}
-          gutterSize={3}
+          gutterSize={window.innerWidth < 480 ? 1 : 3}
           tooltipDataAttrs={(value) => {
             if (!value || !value.date) {
               return null;
@@ -104,6 +105,7 @@ function Heatmap() {
           }}
         />
       </div>
+    </div>
     </>
   );
 }

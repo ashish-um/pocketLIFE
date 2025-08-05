@@ -186,7 +186,7 @@ function Write() {
             onChange={(e) => onUpload(e.target.files[0])}
           />
         </div>
-        <div style={{ maxWidth: "700px", flex: 1, marginLeft: "2rem" }}>
+        <div style={{ maxWidth: "700px", flex: 1, marginLeft: window.innerWidth < 768 ? "0" : "2rem"}}>
           <MyTextbox textArea={descVal} setTextArea={setDescVal} />
           {/* <InputTextarea value={descVal} onChange={(e) => setDescVal(e.target.value)} style={{width:'100%' , height:'30rem', resize:'none'}} rows={20}/> */}
           <br />
