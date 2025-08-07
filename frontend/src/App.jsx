@@ -29,7 +29,7 @@ function App() {
   // console.log(formattedDate)
   const [today, setToday] = useState(formattedDate);
   const [changesMade, setChanges] = useState(false);
-
+  const [years, setYears] = useState([]);
   return (
     <>
       <Router>
@@ -41,7 +41,14 @@ function App() {
               <>
                 {/* <AuthButton/> */}
                 <Context.Provider
-                  value={[changesMade, setChanges, today, setToday]}
+                  value={[
+                    changesMade,
+                    setChanges,
+                    today,
+                    setToday,
+                    years,
+                    setYears,
+                  ]}
                 >
                   <Write />
                   <br />
