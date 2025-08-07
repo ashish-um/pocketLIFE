@@ -8,7 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
 function AuthButton() {
-  const [cookies, setCookies, removeCookie] = useCookies(["access_token"]);
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "access_token",
+    "google_token",
+  ]);
   const navigate = useNavigate();
   const menuRight = useRef(null);
   const toast = useRef(null);
@@ -31,8 +34,10 @@ function AuthButton() {
           style: { fontSize: "12px" },
           icon: "pi pi-sign-out",
           command(event) {
-            event.originalEvent.type === "click" &&
+            if (event.originalEvent.type === "click") {
               removeCookie("access_token");
+              removeCookie("google_token");
+            }
             window.location.reload();
           },
         },
@@ -41,8 +46,11 @@ function AuthButton() {
   ];
 
   const login = useGoogleLogin({
+    scope: "https://www.googleapis.com/auth/drive.appdata",
+
     onSuccess: (tokenResponse) => {
       console.log(tokenResponse);
+      setCookies("google_token", tokenResponse["access_token"]);
       // show();
       axios
         .get(

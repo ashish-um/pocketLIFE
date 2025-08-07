@@ -13,9 +13,19 @@ import Colours from "./Colours";
 import { FileUpload } from "primereact/fileupload";
 import MyInput from "./MyInput";
 import MyTextbox from "./MyTextbox";
+import {
+  findOrCreateFolder,
+  saveOrUpdateFileInDrive,
+  deleteAllFilesByName,
+  readFileByName,
+  readDriveFileContent,
+  deleteAllAppData,
+} from "../utils/driveIntegration";
+import { ENTRIES_FOLDER_NAME } from "../utils/constants";
 
 function Write() {
-  const [cookies, _] = useCookies(["access_token"]);
+  const [entriesFolerId, setEntriesFolerId] = useState("");
+  const [cookies, _] = useCookies(["access_token", "google_token"]);
   const [titleVal, setTitleVal] = useState("The End of An Era");
   const [descVal, setDescVal] = useState("The End of An Era");
   const [imageVal, setImage] = useState(
@@ -25,6 +35,8 @@ function Write() {
   const toast = useRef(null);
   const [____, setChanges] = useContext(Context);
   const [selectedMood, setSelectedMood] = useState(2);
+
+  const [dateIdMapping, setDateIdMapping] = useState();
 
   const show = () => {
     toast.current.show({
@@ -44,29 +56,78 @@ function Write() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URI}/date?date=${date}`, {
-        headers: {
-          Authorization: cookies.access_token,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        const { title, content, image, mood } = res.data;
-        setTitleVal(title);
-        setSelectedMood(mood);
-        setDescVal(content);
-        setImage(image);
-      })
-      .catch(() => {
-        setTitleVal("Provide A Title");
-        setDescVal("Provide A Desc");
-        setSelectedMood(2);
-        setImage(
-          "https://images.stockcake.com/public/f/6/2/f6200ac6-9e40-4081-a36d-51b45ead18c4_large/antique-journal-collection-stockcake.jpg"
-        );
-        // showWarn()
+    findOrCreateFolder(cookies.google_token, ENTRIES_FOLDER_NAME).then(
+      (res) => {
+        console.log("Got Parent Folder ID:", res);
+        setEntriesFolerId(res);
+      }
+    );
+
+    // this will give error if file doesn't exist but dont create the file, its already being managed by Heatmap script
+    readFileByName(cookies.google_token, "dates").then((dates) => {
+      dates = JSON.parse(dates);
+      let map = new Map();
+      dates.forEach((item) => {
+        map.set(item.date, item.id);
       });
+
+      console.log(map);
+
+      setDateIdMapping(map);
+    });
+  }, []);
+
+  useEffect(() => {
+    try {
+      const id = dateIdMapping.get(date);
+      if (id) {
+        readDriveFileContent(cookies.google_token, id).then((res) => {
+          console.log(res);
+          res = JSON.parse(res);
+          const { title, content, image, mood } = res;
+          setTitleVal(title);
+          setSelectedMood(mood);
+          setDescVal(content);
+          setImage(image);
+        });
+      } else {
+        console.error("No entry found!!");
+        throw new Error("No entry found");
+      }
+    } catch {
+      console.error("couldn't get id");
+      setTitleVal("Provide A Title");
+      setDescVal("Provide A Desc");
+      setSelectedMood(2);
+      setImage(
+        "https://images.stockcake.com/public/f/6/2/f6200ac6-9e40-4081-a36d-51b45ead18c4_large/antique-journal-collection-stockcake.jpg"
+      );
+      // showWarn()
+    }
+
+    // axios
+    //   .get(`${import.meta.env.VITE_BACKEND_URI}/date?date=${date}`, {
+    //     headers: {
+    //       Authorization: cookies.access_token,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     const { title, content, image, mood } = res.data;
+    //     setTitleVal(title);
+    //     setSelectedMood(mood);
+    //     setDescVal(content);
+    //     setImage(image);
+    //   })
+    //   .catch(() => {
+    //     setTitleVal("Provide A Title");
+    //     setDescVal("Provide A Desc");
+    //     setSelectedMood(2);
+    //     setImage(
+    //       "https://images.stockcake.com/public/f/6/2/f6200ac6-9e40-4081-a36d-51b45ead18c4_large/antique-journal-collection-stockcake.jpg"
+    //     );
+    //     // showWarn()
+    //   });
   }, [date]);
 
   const handleDrop = (event) => {
@@ -100,32 +161,66 @@ function Write() {
       });
   };
 
-  function handleUpdate() {
-    axios
-      .post(
-        `${import.meta.env.VITE_BACKEND_URI}/date`,
-        {
-          title: titleVal,
-          content: descVal,
-          image: imageVal,
-          mood: selectedMood,
-          date: date,
-        },
-        {
-          headers: {
-            Authorization: cookies.access_token,
-          },
+  async function delALL(filename) {
+    await deleteAllFilesByName(cookies.google_token, filename);
+  }
+
+  async function handleUpdate() {
+    console.log("using this access token:", cookies.google_token);
+
+    const content = {
+      title: titleVal,
+      content: descVal,
+      image: imageVal,
+      mood: selectedMood,
+      date: date,
+    };
+
+    try {
+      const res = await saveOrUpdateFileInDrive(
+        cookies.google_token,
+        date,
+        JSON.stringify(content),
+        entriesFolerId
+      );
+
+      let dates = await readFileByName(cookies.google_token, "dates");
+      if (!dates) {
+        dates = "[]";
+      }
+      dates = JSON.parse(dates);
+
+      let exists = false;
+      dates.forEach((item, index) => {
+        if (item.id == res.id) {
+          exists = true;
+          dates[index].mood = selectedMood;
+          console.log("Date Found!!!");
         }
-      )
-      .then((res) => {
-        console.log(res);
-        show();
-        setChanges((change) => !change);
-      })
-      .catch((err) => {
-        console.error(err);
-        showWarn("Could Not Save Changes!");
       });
+      if (!exists) {
+        dates = [...dates, { id: res.id, date: date, mood: selectedMood }];
+      }
+
+      let map = new Map();
+
+      dates.forEach((item) => {
+        map.set(item.date, item.id);
+      });
+
+      console.log(map);
+
+      setDateIdMapping(map);
+
+      dates = JSON.stringify(dates);
+
+      await saveOrUpdateFileInDrive(cookies.google_token, "dates", dates);
+      console.log("Successfully saved entry");
+      show();
+      setChanges((change) => !change);
+    } catch {
+      console.error("Failed to create entry.");
+    }
   }
 
   return (
@@ -202,7 +297,6 @@ function Write() {
             <MDropdown />
             <Button
               onClick={handleUpdate}
-              style={{}}
               label="Save Changes"
               severity="success"
             />
