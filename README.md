@@ -26,11 +26,12 @@ A beautiful and simple space to capture your daily thoughts, moments, and memori
 </p>
 
 ## 🌸 GirlScript Summer of Code 2025
-> 💬 **This project is proudly part of GSSoC '25!**
-> Thanks to the amazing open-source community, contributors, and mentors for your valuable support.
-> Contributions are welcome from GSSoC contributors and open-source enthusiasts!
+- 💬 **This project is proudly part of GSSoC '25!**
+- Thanks to the amazing open-source community, contributors, and mentors for your valuable support.
+- Contributions are welcome from GSSoC contributors and open-source enthusiasts!
 
 ---
+
 ## 💡 IDEOLOGY
 
 Imagine you have a <ins>magic box</ins>.
@@ -44,20 +45,20 @@ This application is your own personal ***magic box***.
 It's a place to keep your daily treasures—the funny jokes, the *big dreams*, the *quiet moments*, and the <mark>happy memories</mark>. You can write them down or add a photo. ***It’s your story, told by you, for you***. It helps us remember that every single day, no matter how ordinary it seems, holds a little piece of magic.
 
 ---
-## 📥 Submitting a Pull Request
 
+## 📥 Submitting a Pull Request
 We welcome contributions as part of GirlScript Summer of Code 2025 (GSSoC'25) and beyond!
 
 Follow these steps to contribute your changes to **DevDisplay**:
 
 1. **🌟 Star & Fork the Repository**  
    Click the **“Star”** button to support the project, then **“Fork”** the repo to create your own copy:  
-   👉 [https://github.com/muskan-fatim/Tech_event.git](https://github.com/muskan-fatim/Tech_event.git)
+   👉 [https://github.com/ashish-um/pocketLIFE](https://github.com/ashish-um/pocketLIFE)
 
 2. **📥 Clone Your Fork**  
    Use the following command to clone your forked repository to your local machine:
    ```bash
-   git clone https://github.com/Your-Username/Tech_event.git
+   git clone https://github.com/Your-Username/pocketLIFE.git
    ```
  3. Create a Branch
     Navigate to the project directory and create a new branch for your changes:
@@ -119,6 +120,33 @@ Thanks to these amazing people who have contributed to the **pocketLIFE** projec
 </p>
 <!-- readme: contributors -end -->
 
+---
+## 📂 Folder Structure
+
+```bash
+
+pocketLIFE/
+├── README.md                 # Main project documentation
+├── CONTRIBUTE.md             # Contribution guidelines
+├── CODE_OF_CONDUCT.md        # Contributor code of conduct
+├── LICENSE                   # MIT license information
+│
+├── docs/
+│   └── gssoc logo.png        # GSSoC'25 logo used in README
+│
+├── frontend/                 # Frontend application
+│   ├── .env.example          # Example environment variables for frontend
+│   ├── package.json          # Frontend dependencies
+│   └── ...                   # Source files (HTML, CSS, JS, Vite config, etc.)
+│
+└── backend/                  # Backend application
+    ├── .env.example          # Example environment variables for backend
+    ├── package.json          # Backend dependencies
+    └── server.js             # Main backend server file
+```
+
+---
+
 ## 📬 Contact
 
 Have ideas, feedback, or just want to say hi?
@@ -128,9 +156,7 @@ Have ideas, feedback, or just want to say hi?
 ## 💡 Suggestions & Feedback
 Feel free to open issues or discussions if you have any feedback, feature suggestions, or want to collaborate!
 
-
 ---
-
 ## 📜 Code of Conduct
 
 To ensure a welcoming and inclusive environment, we have a Code of Conduct that all contributors are expected to follow. In short: **Be respectful, be kind, and be collaborative.** Please read the full [Code of Conduct](https://github.com/ashish-um/pocketLIFE/blob/main/CODE_OF_CONDUCT.md) before participating.
