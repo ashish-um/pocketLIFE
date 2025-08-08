@@ -128,29 +128,9 @@ Have ideas, feedback, or just want to say hi?
 ## 💡 Suggestions & Feedback
 Feel free to open issues or discussions if you have any feedback, feature suggestions, or want to collaborate!
 
----
-## 📂 Folder Structure
-
-```bash
-
-pocketLIFE/
-├── frontend/                  # Frontend application
-│   ├── .env.example           # Example environment variables for frontend
-│   ├── package.json           # Frontend dependencies
-│   └── ...                    # HTML/CSS/JS (possibly Vite) files
-├── backend/                   # Backend application
-│   ├── .env.example           # Example environment variables for backend
-│   ├── package.json           # Backend dependencies
-│   └── server.js              # Main backend server file
-├── README.md                 # Main project documentation
-├── CONTRIBUTE.md              # Contribution guidelines
-├── CODE_OF_CONDUCT.md         # Contributor code of conduct
-├── LICENSE                    # MIT license information
-│
-└── docs/
-```
 
 ---
+
 ## 📜 Code of Conduct
 
 To ensure a welcoming and inclusive environment, we have a Code of Conduct that all contributors are expected to follow. In short: **Be respectful, be kind, and be collaborative.** Please read the full [Code of Conduct](https://github.com/ashish-um/pocketLIFE/blob/main/CODE_OF_CONDUCT.md) before participating.
