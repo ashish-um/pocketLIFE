@@ -22,6 +22,19 @@ A beautiful and simple space to capture your daily thoughts, moments, and memori
 - Thanks to the amazing open-source community, contributors, and mentors for your valuable support.
 - Contributions are welcome from GSSoC contributors and open-source enthusiasts!
 
+## ⭐ If You Like This Project, Please Star It!
+
+Found this project helpful or believe in our mission? <mark>A single star can make a big difference!</mark> It helps other developers discover the project and motivates our community to keep creating.
+
+<p align="center">
+  Thank you again for your interest. We can't wait to see what you build with us! ❤️❤️
+  <br>
+  <br>
+  <a href="https://github.com/ashish-um/pocketLIFE/stargazers">
+    <img src="https://img.shields.io/github/stars/ashish-um/pocketLIFE?style=for-the-badge&logo=github&color=FFC107&logoColor=white" alt="GitHub Stars">
+  </a>
+</p>
+
 
 ## 💡 IDEOLOGY
 
@@ -66,15 +79,4 @@ To ensure a welcoming and inclusive environment, we have a Code of Conduct that 
 This project is licensed under the [MIT License](https://github.com/ashish-um/pocketLIFE/blob/main/LICENSE).
 
 
-## ⭐ If You Like This Project, Please Star It!
 
-Found this project helpful or believe in our mission? <mark>A single star can make a big difference!</mark> It helps other developers discover the project and motivates our community to keep creating.
-
-<p align="center">
-  Thank you again for your interest. We can't wait to see what you build with us! ❤️❤️
-  <br>
-  <br>
-  <a href="https://github.com/ashish-um/pocketLIFE/stargazers">
-    <img src="https://img.shields.io/github/stars/ashish-um/pocketLIFE?style=for-the-badge&logo=github&color=FFC107&logoColor=white" alt="GitHub Stars">
-  </a>
-</p>
