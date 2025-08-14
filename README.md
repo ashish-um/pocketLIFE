@@ -17,6 +17,25 @@ A beautiful and simple space to capture your daily thoughts, moments, and memori
   </a>
 </p>
 
+## 🌸 GirlScript Summer of Code 2025
+- 💬 **This project is proudly part of GSSoC '25!**
+- Thanks to the amazing open-source community, contributors, and mentors for your valuable support.
+- Contributions are welcome from GSSoC contributors and open-source enthusiasts!
+
+## ⭐ If You Like This Project, Please Star It!
+
+Found this project helpful or believe in our mission? <mark>A single star can make a big difference!</mark> It helps other developers discover the project and motivates our community to keep creating.
+
+<p align="center">
+  Thank you again for your interest. We can't wait to see what you build with us! ❤️❤️
+  <br>
+  <br>
+  <a href="https://github.com/ashish-um/pocketLIFE/stargazers">
+    <img src="https://img.shields.io/github/stars/ashish-um/pocketLIFE?style=for-the-badge&logo=github&color=FFC107&logoColor=white" alt="GitHub Stars">
+  </a>
+</p>
+
+
 ## 💡 IDEOLOGY
 
 Imagine you have a <ins>magic box</ins>.
@@ -29,36 +48,35 @@ This application is your own personal ***magic box***.
 
 It's a place to keep your daily treasures—the funny jokes, the *big dreams*, the *quiet moments*, and the <mark>happy memories</mark>. You can write them down or add a photo. ***It’s your story, told by you, for you***. It helps us remember that every single day, no matter how ordinary it seems, holds a little piece of magic.
 
-
 ## TODO:
 - [ ] Adding AES to daily Entries
-- [ ] Migration to Google Drive
-- [ ] Disable Spell Check in Textarea
+- [x] Migration to Google Drive
 - [ ] Adding more verbosity in client side for each request being.
 - [ ] Ability to delete entry
 - [ ] Login Required to Use the application - Home Page
-- [ ] Making it responsive
+- [x] Making it responsive
 - [ ] Ability to add more images in each day
 
-## 🤝 Contributing:
+## 🤝 Contributors:
 
 We love our contributors! If you'd like to help, please check out our [`CONTRIBUTE.md`](https://github.com/ashish-um/pocketLIFE/blob/main/CONTRIBUTE.md) file for guidelines.
 
+Thanks to these amazing people who have contributed to the **pocketLIFE** project:
+
+<!-- readme: contributors -start -->
 <a href="https://github.com/ashish-um/pocketLIFE/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=ashish-um/pocketLIFE" />
 </a>
+<!-- readme: contributors -end -->
 
-## ⭐ If You Like This Project, Please Star It!
 
-Found this project helpful or believe in our mission? <mark>A single star can make a big difference!</mark> It helps other developers discover the project and motivates our community to keep creating.
+## 📜 Code of Conduct
 
-<p align="center">
-  Thank you for your support!
-  <br>
-  <br>
-  <a href="https://github.com/ashish-um/pocketLIFE/stargazers">
-    <img src="https://img.shields.io/github/stars/ashish-um/pocketLIFE?style=for-the-badge&logo=github&color=FFC107&logoColor=white" alt="GitHub Stars">
-  </a>
-</p>
+To ensure a welcoming and inclusive environment, we have a Code of Conduct that all contributors are expected to follow. In short: **Be respectful, be kind, and be collaborative.** Please read the full [Code of Conduct](https://github.com/ashish-um/pocketLIFE/blob/main/CODE_OF_CONDUCT.md) before participating.
+
+## 📄 License
+
+This project is licensed under the [MIT License](https://github.com/ashish-um/pocketLIFE/blob/main/LICENSE).
+
 
 

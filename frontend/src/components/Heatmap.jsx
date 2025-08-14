@@ -132,33 +132,35 @@ function Heatmap() {
   return (
     <>
       <Tooltip id="myid" />
-      <div id="heatmap-container" className="container" style={{marginTop: "2.5rem"}}>
-        <CalendarHeatmap
-          startDate={shiftDate(today, -365)}
-          endDate={today}
-          showMonthLabels
-          // showWeekdayLabels
-          values={dates}
-          classForValue={(value) => {
-            if (!value) {
-              return "color-empty";
-            }
-            return `color-box-${value.count}`;
-          }}
-          gutterSize={3}
-          tooltipDataAttrs={(value) => {
-            if (!value || !value.date) {
-              return null;
-            }
-            return {
-              "data-tooltip-content": value.date,
-              "data-tooltip-id": "myid",
-            };
-          }}
-          onClick={(value) => {
-            navigate(`/${value.date}`);
-          }}
-        />
+      <div id="heatmap-scroll-outer" style={{marginTop: "2.5rem"}>
+        <div id="heatmap-scroll-inner" className ="container">
+          <CalendarHeatmap
+            startDate={shiftDate(today, -365)}
+            endDate={today}
+            showMonthLabels
+            // showWeekdayLabels
+            values={dates}
+            classForValue={(value) => {
+              if (!value) {
+                return "color-empty";
+              }
+              return `color-box-${value.count}`;
+            }}
+            gutterSize={window.innerWidth < 480 ? 1 : 3}
+            tooltipDataAttrs={(value) => {
+              if (!value || !value.date) {
+                return null;
+              }
+              return {
+                "data-tooltip-content": value.date,
+                "data-tooltip-id": "myid",
+              };
+            }}
+            onClick={(value) => {
+              navigate(`/${value.date}`);
+            }}
+          />
+        </div>
       </div>
     </>
   );

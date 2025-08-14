@@ -356,8 +356,7 @@ function Write() {
           </div>
         </div>
 
-        {/* Right column: Text box */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ minWidth: 0, maxWidth: "700px", flex: 1, marginLeft: window.innerWidth < 768 ? "0" : "2rem"}}>
           <MyTextbox textArea={descVal} setTextArea={setDescVal} />
           <br />
           <div
