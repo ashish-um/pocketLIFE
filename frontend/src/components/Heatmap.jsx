@@ -132,8 +132,8 @@ function Heatmap() {
   return (
     <>
       <Tooltip id="myid" />
-      <div id="heatmap-scroll-outer" style={{marginTop: "2.5rem"}>
-        <div id="heatmap-scroll-inner" className ="container">
+      <div id="heatmap-scroll-outer" style={{ marginTop: "2.5rem" }}>
+        <div id="heatmap-scroll-inner" className="container">
           <CalendarHeatmap
             startDate={shiftDate(today, -365)}
             endDate={today}
