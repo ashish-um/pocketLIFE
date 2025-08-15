@@ -35,6 +35,7 @@ function Write() {
   const toast = useRef(null);
   const [____, setChanges] = useContext(Context);
   const [selectedMood, setSelectedMood] = useState(2);
+  const [loading, setLoading] = useState(false);
 
   const [dateIdMapping, setDateIdMapping] = useState();
 
@@ -167,6 +168,7 @@ function Write() {
 
   async function handleUpdate() {
     console.log("using this access token:", cookies.google_token);
+    setLoading(true);
 
     const content = {
       title: titleVal,
@@ -220,6 +222,8 @@ function Write() {
       setChanges((change) => !change);
     } catch {
       console.error("Failed to create entry.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -281,7 +285,13 @@ function Write() {
             onChange={(e) => onUpload(e.target.files[0])}
           />
         </div>
-        <div style={{ maxWidth: "700px", flex: 1, marginLeft: window.innerWidth < 768 ? "0" : "2rem"}}>
+        <div
+          style={{
+            maxWidth: "700px",
+            flex: 1,
+            marginLeft: window.innerWidth < 768 ? "0" : "2rem",
+          }}
+        >
           <MyTextbox textArea={descVal} setTextArea={setDescVal} />
           {/* <InputTextarea value={descVal} onChange={(e) => setDescVal(e.target.value)} style={{width:'100%' , height:'30rem', resize:'none'}} rows={20}/> */}
           <br />
@@ -297,8 +307,10 @@ function Write() {
             <MDropdown />
             <Button
               onClick={handleUpdate}
-              label="Save Changes"
+              icon={loading ? "pi pi-spin pi-spinner" : ""}
+              label={loading ? "Saving..." : "Save Changes"}
               severity="success"
+              disabled={loading}
             />
           </div>
         </div>
