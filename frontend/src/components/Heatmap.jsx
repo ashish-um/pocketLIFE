@@ -13,6 +13,7 @@ function Heatmap() {
   const navigate = useNavigate();
   const [dates, setDates] = useState([]);
   const [changes, , today, , , setYears] = useContext(Context);
+  const [loading, setLoading] = useState(false);
 
   // const today = new Date();
   function shiftDate(date, numDays) {
@@ -22,6 +23,7 @@ function Heatmap() {
   }
 
   useEffect(() => {
+    setLoading(true);
     findOrCreateJsonFileByName(cookies.google_token, "dates", "[]")
       .then((res) => {
         console.log(res);
@@ -75,6 +77,9 @@ function Heatmap() {
       })
       .catch((err) => {
         console.error("Got Error while getting Dates", err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
     // ------------------- OLD METHOD ------------------
@@ -132,34 +137,41 @@ function Heatmap() {
   return (
     <>
       <Tooltip id="myid" />
-      <div id="heatmap-scroll-outer" style={{ marginTop: "2.5rem" }}>
+      <div id="heatmap-scroll-outer">
         <div id="heatmap-scroll-inner" className="container">
-          <CalendarHeatmap
-            startDate={shiftDate(today, -365)}
-            endDate={today}
-            showMonthLabels
-            // showWeekdayLabels
-            values={dates}
-            classForValue={(value) => {
-              if (!value) {
-                return "color-empty";
-              }
-              return `color-box-${value.count}`;
-            }}
-            gutterSize={window.innerWidth < 480 ? 1 : 3}
-            tooltipDataAttrs={(value) => {
-              if (!value || !value.date) {
-                return null;
-              }
-              return {
-                "data-tooltip-content": value.date,
-                "data-tooltip-id": "myid",
-              };
-            }}
-            onClick={(value) => {
-              navigate(`/${value.date}`);
-            }}
-          />
+          {loading ? (
+            <div className="flex flex-col items-center justify-center min-h-[200px]">
+              <i className="pi pi-spin pi-spinner text-green-500 text-8xl"></i>
+              <p className="mt-4 text-gray-600 text-sm">Loading heatmap...</p>
+            </div>
+          ) : (
+            <CalendarHeatmap
+              startDate={shiftDate(today, -365)}
+              endDate={today}
+              showMonthLabels
+              // showWeekdayLabels
+              values={dates}
+              classForValue={(value) => {
+                if (!value) {
+                  return "color-empty";
+                }
+                return `color-box-${value.count}`;
+              }}
+              gutterSize={window.innerWidth < 480 ? 1 : 3}
+              tooltipDataAttrs={(value) => {
+                if (!value || !value.date) {
+                  return null;
+                }
+                return {
+                  "data-tooltip-content": value.date,
+                  "data-tooltip-id": "myid",
+                };
+              }}
+              onClick={(value) => {
+                navigate(`/${value.date}`);
+              }}
+            />
+          )}
         </div>
       </div>
     </>

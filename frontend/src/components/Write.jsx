@@ -36,6 +36,7 @@ function Write() {
   const toast = useRef(null);
   const [____, setChanges] = useContext(Context);
   const [selectedMood, setSelectedMood] = useState(2);
+  const [loading, setLoading] = useState(false);
   const [doodleStrokes, setDoodleStrokes] = useState([]);
   const [doodleImageUrl, setDoodleImageUrl] = useState("");
   const [hasJustSavedDoodle, setHasJustSavedDoodle] = useState(false);
@@ -180,6 +181,7 @@ function Write() {
 
   async function handleUpdate() {
     console.log("using this access token:", cookies.google_token);
+    setLoading(true);
 
     const content = {
       title: titleVal,
@@ -189,7 +191,9 @@ function Write() {
       date: date,
       doodle: doodleStrokes,
       // Persist doodleImageUrl only if user explicitly saved in this session
-      ...(hasJustSavedDoodle && doodleImageUrl ? { doodleImage: doodleImageUrl } : {}),
+      ...(hasJustSavedDoodle && doodleImageUrl
+        ? { doodleImage: doodleImageUrl }
+        : {}),
     };
 
     try {
@@ -236,6 +240,8 @@ function Write() {
       setChanges((change) => !change);
     } catch {
       console.error("Failed to create entry.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -262,9 +268,20 @@ function Write() {
         {/* <InputText style={{width:'100%'}} value={titleVal} onChange={(e) => setTitleVal(e.target.value)} /> */}
       </div>
       <br />
-      <div className="container" style={{ display: "flex", gap: "1rem", alignItems: "stretch" }}>
+      <div
+        className="container"
+        style={{ display: "flex", gap: "1rem", alignItems: "stretch" }}
+      >
         {/* Left column: two rows (image upload + doodle) */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1rem", minWidth: 0 }}>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            minWidth: 0,
+          }}
+        >
           {/* Row 1: Image upload panel with cover background and visible image in front */}
           <div
             className="img-bg"
@@ -276,7 +293,7 @@ function Write() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              overflow: "hidden"
+              overflow: "hidden",
             }}
           >
             {/* Blurred background */}
@@ -315,11 +332,23 @@ function Write() {
               onChange={(e) => onUpload(e.target.files[0])}
               style={{ display: "none" }}
             />
-          </div>          
+          </div>
 
           {/* Row 2: Doodle pad */}
-          <div style={{ border: "1px dashed rgba(1,1,1,0.35)", borderRadius: 8, padding: 8 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div
+            style={{
+              border: "1px dashed rgba(1,1,1,0.35)",
+              borderRadius: 8,
+              padding: 8,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <h3 style={{ margin: 0 }}>Add a doodle!</h3>
               <div style={{ display: "flex", gap: 8 }}>
                 <Button
@@ -331,14 +360,20 @@ function Write() {
                     if (!doodleRef.current) return;
                     const blob = await doodleRef.current.toBlob();
                     if (!blob) return;
-                    const file = new File([blob], `doodle-${date}.png`, { type: "image/png" });
+                    const file = new File([blob], `doodle-${date}.png`, {
+                      type: "image/png",
+                    });
 
                     const formData = new FormData();
                     formData.append("image", file);
                     axios
-                      .post(`${import.meta.env.VITE_BACKEND_URI}/upload-doodle`, formData, {
-                        headers: { Authorization: cookies.access_token },
-                      })
+                      .post(
+                        `${import.meta.env.VITE_BACKEND_URI}/upload-doodle`,
+                        formData,
+                        {
+                          headers: { Authorization: cookies.access_token },
+                        }
+                      )
                       .then((res) => {
                         setDoodleImageUrl(res.data.image);
                         setHasJustSavedDoodle(true);
@@ -347,16 +382,34 @@ function Write() {
                       .catch((err) => console.error(err));
                   }}
                 />
-                <Button type="button" size="small" label="Clear" onClick={() => doodleRef.current?.clear()} />
+                <Button
+                  type="button"
+                  size="small"
+                  label="Clear"
+                  onClick={() => doodleRef.current?.clear()}
+                />
               </div>
             </div>
             <div style={{ marginTop: 10 }}>
-              <DoodlePad ref={doodleRef} value={doodleStrokes} onChange={setDoodleStrokes} width={600} height={220} />
+              <DoodlePad
+                ref={doodleRef}
+                value={doodleStrokes}
+                onChange={setDoodleStrokes}
+                width={600}
+                height={220}
+              />
             </div>
           </div>
         </div>
 
-        <div style={{ minWidth: 0, maxWidth: "700px", flex: 1, marginLeft: window.innerWidth < 768 ? "0" : "2rem"}}>
+        <div
+          style={{
+            minWidth: 0,
+            maxWidth: "700px",
+            flex: 1,
+            marginLeft: window.innerWidth < 768 ? "0" : "2rem",
+          }}
+        >
           <MyTextbox textArea={descVal} setTextArea={setDescVal} />
           <br />
           <div
@@ -368,7 +421,13 @@ function Write() {
             }}
           >
             <MDropdown />
-            <Button onClick={handleUpdate} label="Save Changes" severity="success" />
+            <Button
+              onClick={handleUpdate}
+              icon={loading ? "pi pi-spin pi-spinner" : ""}
+              label={loading ? "Saving..." : "Save Changes"}
+              severity="success"
+              disabled={loading}
+            />
           </div>
         </div>
       </div>
