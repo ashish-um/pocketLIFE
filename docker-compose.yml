@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo 
+    ports: 
+      - "27017:27017"
+    volumes: 
+      - mongo_data:/data/db
+    networks:
+      - appnet    
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mongodb  
+    networks:
+      - appnet
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+networks:
+  appnet:
+
+volumes:
+  mongo_data:
