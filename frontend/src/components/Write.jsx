@@ -13,6 +13,7 @@ import Colours from "./Colours";
 import { FileUpload } from "primereact/fileupload";
 import MyInput from "./MyInput";
 import MyTextbox from "./MyTextbox";
+import DoodlePad from "./DoodlePad";
 import {
   findOrCreateFolder,
   saveOrUpdateFileInDrive,
@@ -36,6 +37,10 @@ function Write() {
   const [____, setChanges] = useContext(Context);
   const [selectedMood, setSelectedMood] = useState(2);
   const [loading, setLoading] = useState(false);
+  const [doodleStrokes, setDoodleStrokes] = useState([]);
+  const [doodleImageUrl, setDoodleImageUrl] = useState("");
+  const [hasJustSavedDoodle, setHasJustSavedDoodle] = useState(false);
+  const doodleRef = useRef(null);
 
   const [dateIdMapping, setDateIdMapping] = useState();
 
@@ -79,17 +84,25 @@ function Write() {
   }, []);
 
   useEffect(() => {
+    // Reset doodle states immediately on date change so previous day's doodle doesn't flash
+    setDoodleStrokes([]);
+    setDoodleImageUrl("");
+    setHasJustSavedDoodle(false);
     try {
       const id = dateIdMapping.get(date);
       if (id) {
         readDriveFileContent(cookies.google_token, id).then((res) => {
           console.log(res);
           res = JSON.parse(res);
-          const { title, content, image, mood } = res;
+          const { title, content, image, mood, doodle, doodleImage } = res;
           setTitleVal(title);
           setSelectedMood(mood);
           setDescVal(content);
           setImage(image);
+          // Load saved doodle strokes for this day (pad starts empty until load completes)
+          if (Array.isArray(doodle)) setDoodleStrokes(doodle);
+          // Do not show preview on view; only after an explicit save in this session
+          // if (typeof doodleImage === "string") setDoodleImageUrl(doodleImage);
         });
       } else {
         console.error("No entry found!!");
@@ -176,6 +189,11 @@ function Write() {
       image: imageVal,
       mood: selectedMood,
       date: date,
+      doodle: doodleStrokes,
+      // Persist doodleImageUrl only if user explicitly saved in this session
+      ...(hasJustSavedDoodle && doodleImageUrl
+        ? { doodleImage: doodleImageUrl }
+        : {}),
     };
 
     try {
@@ -250,51 +268,149 @@ function Write() {
         {/* <InputText style={{width:'100%'}} value={titleVal} onChange={(e) => setTitleVal(e.target.value)} /> */}
       </div>
       <br />
-      <div className="container">
+      <div
+        className="container"
+        style={{ display: "flex", gap: "1rem", alignItems: "stretch" }}
+      >
+        {/* Left column: two rows (image upload + doodle) */}
         <div
-          className="img-bg"
           style={{
-            background: `url(${imageVal})`,
-            height: "30rem",
+            flex: 1,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            gap: "6px",
-            border: "1px dashed rgba(1,1,1,0.35)",
+            gap: "1rem",
+            minWidth: 0,
           }}
         >
-          <label
-            onDragOver={(event) => event.preventDefault()}
-            onDrop={handleDrop}
-            for="myFile"
-            class="custom-file-upload"
+          {/* Row 1: Image upload panel with cover background and visible image in front */}
+          <div
+            className="img-bg"
+            style={{
+              position: "relative",
+              minHeight: "12rem",
+              border: "1px dashed rgba(1,1,1,0.35)",
+              borderRadius: 8,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+            }}
           >
-            <img
-              src={imageVal}
-              style={{ objectFit: "contain", height: "100%" }}
-              width={300}
-              alt=""
+            {/* Blurred background */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                backgroundImage: `url(${imageVal})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                filter: "blur(12px)",
+                zIndex: 1,
+              }}
             />
-            {/* Custom Upload */}
-          </label>
-          <input
-            type="file"
-            id="myFile"
-            accept="image/*"
-            name="filename"
-            onChange={(e) => onUpload(e.target.files[0])}
-          />
+            {/* Visible image in front */}
+            {imageVal && (
+              <img
+                src={imageVal}
+                alt="Uploaded"
+                style={{
+                  maxHeight: "10rem",
+                  maxWidth: "90%",
+                  borderRadius: 8,
+                  boxShadow: "0 2px 16px rgba(0,0,0,0.15)",
+                  zIndex: 2,
+                  position: "relative",
+                }}
+              />
+            )}
+            <input
+              type="file"
+              id="myFile"
+              accept="image/*"
+              name="filename"
+              onChange={(e) => onUpload(e.target.files[0])}
+              style={{ display: "none" }}
+            />
+          </div>
+
+          {/* Row 2: Doodle pad */}
+          <div
+            style={{
+              border: "1px dashed rgba(1,1,1,0.35)",
+              borderRadius: 8,
+              padding: 8,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <h3 style={{ margin: 0 }}>Add a doodle!</h3>
+              <div style={{ display: "flex", gap: 8 }}>
+                <Button
+                  type="button"
+                  severity="secondary"
+                  size="small"
+                  label="Save Doodle"
+                  onClick={async () => {
+                    if (!doodleRef.current) return;
+                    const blob = await doodleRef.current.toBlob();
+                    if (!blob) return;
+                    const file = new File([blob], `doodle-${date}.png`, {
+                      type: "image/png",
+                    });
+
+                    const formData = new FormData();
+                    formData.append("image", file);
+                    axios
+                      .post(
+                        `${import.meta.env.VITE_BACKEND_URI}/upload-doodle`,
+                        formData,
+                        {
+                          headers: { Authorization: cookies.access_token },
+                        }
+                      )
+                      .then((res) => {
+                        setDoodleImageUrl(res.data.image);
+                        setHasJustSavedDoodle(true);
+                        show();
+                      })
+                      .catch((err) => console.error(err));
+                  }}
+                />
+                <Button
+                  type="button"
+                  size="small"
+                  label="Clear"
+                  onClick={() => doodleRef.current?.clear()}
+                />
+              </div>
+            </div>
+            <div style={{ marginTop: 10 }}>
+              <DoodlePad
+                ref={doodleRef}
+                value={doodleStrokes}
+                onChange={setDoodleStrokes}
+                width={600}
+                height={220}
+              />
+            </div>
+          </div>
         </div>
+
         <div
           style={{
+            minWidth: 0,
             maxWidth: "700px",
             flex: 1,
             marginLeft: window.innerWidth < 768 ? "0" : "2rem",
           }}
         >
           <MyTextbox textArea={descVal} setTextArea={setDescVal} />
-          {/* <InputTextarea value={descVal} onChange={(e) => setDescVal(e.target.value)} style={{width:'100%' , height:'30rem', resize:'none'}} rows={20}/> */}
-          <br />
           <br />
           <div
             style={{
