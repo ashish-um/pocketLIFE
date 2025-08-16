@@ -21,8 +21,11 @@ import {
   readFileByName,
   readDriveFileContent,
   deleteAllAppData,
-} from "../utils/driveIntegration.jsx";
-import { ENTRIES_FOLDER_NAME } from "../utils/constants.jsx";
+
+} from "../utils/driveIntegration";
+import { ENTRIES_FOLDER_NAME } from "../utils/constants";
+import Navbar from "./Navbar";
+
 
 function Write() {
   const [entriesFolerId, setEntriesFolerId] = useState("");
@@ -230,7 +233,6 @@ function Write() {
     <>
       <Toast ref={toast} position="bottom-right" />
       {/* <Button onClick={show} label="Show" /> */}
-
       <div className="container" style={{ flexDirection: "column" }}>
         <div
           style={{
@@ -343,7 +345,11 @@ function Write() {
           </div>
         </div>
 
+
+
+
         <div style={{ minWidth: 0, maxWidth: "700px", flex: 1, marginLeft: window.innerWidth < 768 ? "0" : "2rem"}}>
+
           <MyTextbox textArea={descVal} setTextArea={setDescVal} />
           <br />
           <div

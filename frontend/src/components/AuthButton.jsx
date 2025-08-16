@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
-function AuthButton() {
+function AuthButton({ label = "Login/Enter" }) {
   const [cookies, setCookies, removeCookie] = useCookies([
     "access_token",
     "google_token",
@@ -15,6 +15,17 @@ function AuthButton() {
   const navigate = useNavigate();
   const menuRight = useRef(null);
   const toast = useRef(null);
+
+  const date = new Date();
+  function toTwoDigits(number) {
+    return String(number).padStart(2, "0");
+  }
+  const formattedDate =
+    date.getFullYear() +
+    "-" +
+    toTwoDigits(date.getMonth() + 1) +
+    "-" +
+    toTwoDigits(date.getDate());
 
   const showError = () => {
     toast.current.show({
@@ -38,7 +49,7 @@ function AuthButton() {
               removeCookie("access_token");
               removeCookie("google_token");
             }
-            window.location.reload();
+            navigate("/", { replace: true });
           },
         },
       ],
@@ -63,7 +74,8 @@ function AuthButton() {
           localStorage.setItem("username", res.data.user.name);
           localStorage.setItem("email", res.data.user.email);
           localStorage.setItem("image", res.data.user.image);
-          navigate("/");
+          navigate(`/${formattedDate}`, { replace: true });
+          window.location.reload();
         })
         .catch((err) => {
           console.error(err);
@@ -101,13 +113,14 @@ function AuthButton() {
       ) : (
         <Button
           severity="info"
-          rounded
+          // rounded
+          className="hero-content-button"
           raised
-          icon="pi pi-sign-in"
+          // icon="pi pi-sign-in"
           onClick={() => {
             login();
           }}
-          label="Login/Enter"
+          label={label}
         />
       )}
     </div>
