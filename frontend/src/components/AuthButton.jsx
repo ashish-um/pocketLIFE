@@ -16,6 +16,17 @@ function AuthButton({ label = "Login/Enter" }) {
   const menuRight = useRef(null);
   const toast = useRef(null);
 
+  const date = new Date();
+  function toTwoDigits(number) {
+    return String(number).padStart(2, "0");
+  }
+  const formattedDate =
+    date.getFullYear() +
+    "-" +
+    toTwoDigits(date.getMonth() + 1) +
+    "-" +
+    toTwoDigits(date.getDate());
+
   const showError = () => {
     toast.current.show({
       severity: "error",
@@ -38,7 +49,7 @@ function AuthButton({ label = "Login/Enter" }) {
               removeCookie("access_token");
               removeCookie("google_token");
             }
-            window.location.reload();
+            navigate("/", { replace: true });
           },
         },
       ],
@@ -54,7 +65,8 @@ function AuthButton({ label = "Login/Enter" }) {
       // show();
       axios
         .get(
-          `${import.meta.env.VITE_BACKEND_URI}/auth?code=${tokenResponse["access_token"]
+          `${import.meta.env.VITE_BACKEND_URI}/auth?code=${
+            tokenResponse["access_token"]
           }`
         )
         .then((res) => {
@@ -62,7 +74,8 @@ function AuthButton({ label = "Login/Enter" }) {
           localStorage.setItem("username", res.data.user.name);
           localStorage.setItem("email", res.data.user.email);
           localStorage.setItem("image", res.data.user.image);
-          navigate("/");
+          navigate(`/${formattedDate}`, { replace: true });
+          window.location.reload();
         })
         .catch((err) => {
           console.error(err);
