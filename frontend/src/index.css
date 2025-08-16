@@ -125,7 +125,7 @@ textarea {
 }
 
 .homepage {
-  background: url(bg-2.svg);
+  background: url("/bg-2.svg");
   min-height: 100vh;
   position: relative;
 }
