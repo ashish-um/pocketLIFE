@@ -6,14 +6,14 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import { Toast } from "primereact/toast";
-import AuthButton from "./AuthButton";
-import { Context } from "../utils/context";
-import MDropdown from "./MDropdown";
-import Colours from "./Colours";
+import AuthButton from "./AuthButton.jsx";
+import { Context } from "../utils/context.jsx";
+import MDropdown from "./MDropdown.jsx";
+import Colours from "./Colours.jsx";
 import { FileUpload } from "primereact/fileupload";
-import MyInput from "./MyInput";
-import MyTextbox from "./MyTextbox";
-import DoodlePad from "./DoodlePad";
+import MyInput from "./MyInput.jsx";
+import MyTextbox from "./MyTextbox.jsx";
+import DoodlePad from "./DoodlePad.jsx";
 import {
   findOrCreateFolder,
   saveOrUpdateFileInDrive,
@@ -21,8 +21,8 @@ import {
   readFileByName,
   readDriveFileContent,
   deleteAllAppData,
-} from "../utils/driveIntegration";
-import { ENTRIES_FOLDER_NAME } from "../utils/constants";
+} from "../utils/driveIntegration.jsx";
+import { ENTRIES_FOLDER_NAME } from "../utils/constants.jsx";
 
 function Write() {
   const [entriesFolerId, setEntriesFolerId] = useState("");
@@ -42,6 +42,17 @@ function Write() {
   const doodleRef = useRef(null);
 
   const [dateIdMapping, setDateIdMapping] = useState();
+
+  // --- Feature Implementation: Word and Character Count ---
+  // Ensure 'descVal' is a string to prevent errors.
+  const safeDescVal = descVal || "";
+  
+  // Calculate word count.
+  const wordCount = safeDescVal.trim() === '' ? 0 : safeDescVal.trim().split(/\s+/).filter(Boolean).length;
+  
+  // Calculate character count.
+  const charCount = safeDescVal.length;
+  // --- End of Feature Implementation ---
 
   const show = () => {
     toast.current.show({
@@ -117,30 +128,6 @@ function Write() {
       );
       // showWarn()
     }
-
-    // axios
-    //   .get(`${import.meta.env.VITE_BACKEND_URI}/date?date=${date}`, {
-    //     headers: {
-    //       Authorization: cookies.access_token,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     const { title, content, image, mood } = res.data;
-    //     setTitleVal(title);
-    //     setSelectedMood(mood);
-    //     setDescVal(content);
-    //     setImage(image);
-    //   })
-    //   .catch(() => {
-    //     setTitleVal("Provide A Title");
-    //     setDescVal("Provide A Desc");
-    //     setSelectedMood(2);
-    //     setImage(
-    //       "https://images.stockcake.com/public/f/6/2/f6200ac6-9e40-4081-a36d-51b45ead18c4_large/antique-journal-collection-stockcake.jpg"
-    //     );
-    //     // showWarn()
-    //   });
   }, [date]);
 
   const handleDrop = (event) => {
@@ -363,12 +350,32 @@ function Write() {
             style={{
               width: "100%",
               display: "flex",
-              justifyContent: "end",
+              justifyContent: "space-between",
+              alignItems: "center",
               gap: "6px",
             }}
           >
-            <MDropdown />
-            <Button onClick={handleUpdate} label="Save Changes" severity="success" />
+            {/* --- Display for the Word and Character Count --- */}
+            <div
+              style={{
+                fontSize: "0.85rem",
+                color: "#444",
+                backgroundColor: "#f9f9f9",
+                padding: "6px 12px",
+                borderRadius: "6px",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                lineHeight: "1.4"
+              }}
+            >
+              <div style={{ fontWeight: "500", color: "#222" }}>Words: {wordCount}</div>
+              <div style={{ fontWeight: "500", color: "#222" }}>Characters: {charCount}</div>
+            </div>
+            {/* --- End of Display --- */}
+            
+            <div style={{display: "flex", alignItems: 'center', gap: "6px"}}>
+                <MDropdown />
+                <Button onClick={handleUpdate} label="Save Changes" severity="success" />
+            </div>
           </div>
         </div>
       </div>
