@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import "../index.css";
 import AuthButton from '../components/AuthButton.jsx';
 import Colours from './Colours.jsx';
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
@@ -18,8 +19,10 @@ const Navbar = () => {
             {/* Menu */}
             <div className={`comp ${isOpen ? "open" : ""}`}>
                 <ul>
-                    <li>Home</li>
-                    <li>My Diary</li>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li><Link to="/">My Diary</Link></li>
                     <li><AuthButton /></li>
                 </ul>
             </div>

@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
-function AuthButton() {
+function AuthButton({ label = "Login/Enter" }) {
   const [cookies, setCookies, removeCookie] = useCookies([
     "access_token",
     "google_token",
@@ -54,8 +54,7 @@ function AuthButton() {
       // show();
       axios
         .get(
-          `${import.meta.env.VITE_BACKEND_URI}/auth?code=${
-            tokenResponse["access_token"]
+          `${import.meta.env.VITE_BACKEND_URI}/auth?code=${tokenResponse["access_token"]
           }`
         )
         .then((res) => {
@@ -101,13 +100,14 @@ function AuthButton() {
       ) : (
         <Button
           severity="info"
-          rounded
+          // rounded
+          className="hero-content-button"
           raised
-          icon="pi pi-sign-in"
+          // icon="pi pi-sign-in"
           onClick={() => {
             login();
           }}
-          label="Login/Enter"
+          label={label}
         />
       )}
     </div>

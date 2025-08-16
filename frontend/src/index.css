@@ -133,17 +133,16 @@ textarea {
 .nav {
   width: 100%;
   padding: 0 50px;
-  position: sticky;   /* keep only this */
-  top: 0;             /* stick at the top */
+  position: sticky; /* keep only this */
+  top: 0; /* stick at the top */
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  background: white;  /* so content doesn’t overlap behind */
+  background: white; /* so content doesn’t overlap behind */
   height: 70px;
-  z-index: 1000;      /* keep it above other elements */
+  z-index: 1000; /* keep it above other elements */
 }
-
 
 .logo {
   font-weight: bold;
@@ -175,7 +174,12 @@ textarea {
   font-size: 1rem;
 }
 
-.comp ul li:hover {
+.comp ul li a {
+  color: #938e83;
+  text-decoration: none;
+}
+
+.comp ul li a:hover {
   color: black;
   transition: all ease 0.4s;
   cursor: pointer;
@@ -321,22 +325,20 @@ textarea {
   font-weight: 500;
   opacity: 0.4;
 }
-.hero .content button {
+.hero-content-button {
   background: #5a8c5a;
-  padding: 1rem 2rem;
   outline: none;
   border: none;
-  border-radius: 8px;
-  color: white;
   cursor: pointer;
   font-weight: 600;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-  margin-top: 0.5rem;
+  color: white;
 }
-.hero .content button:hover {
+
+.hero-content-button:hover {
   background: #3e673e;
   transition: all ease 0.5s;
 }
+
 .featuresec {
   width: 100vw;
   display: flex;

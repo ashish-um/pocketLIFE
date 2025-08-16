@@ -1,5 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
+import AuthButton from '../components/AuthButton.jsx';
+import StartwritingButton from './StartwritingButton.jsx';
 
 const HomePage = () => {
     const features = [
@@ -27,7 +29,7 @@ const HomePage = () => {
                     <h1>“Because Every Day Deserves
                         <br />to Be Remembered”</h1>
                     <h3>PocketLIFE is your private digital diary — a beautifully simple space to capture your thoughts, cherish your memories, and preserve the little moments that make each day special.</h3>
-                    <button>Start Writing</button>
+                    <StartwritingButton label='Start Writing'/>
                 </div>
             </div>
             <div className="featuresec">

@@ -22,6 +22,7 @@ import {
   deleteAllAppData,
 } from "../utils/driveIntegration";
 import { ENTRIES_FOLDER_NAME } from "../utils/constants";
+import Navbar from "./Navbar";
 
 function Write() {
   const [entriesFolerId, setEntriesFolerId] = useState("");
@@ -227,7 +228,6 @@ function Write() {
     <>
       <Toast ref={toast} position="bottom-right" />
       {/* <Button onClick={show} label="Show" /> */}
-
       <div className="container" style={{ flexDirection: "column" }}>
         <div
           style={{
@@ -281,7 +281,7 @@ function Write() {
             onChange={(e) => onUpload(e.target.files[0])}
           />
         </div>
-        <div style={{ maxWidth: "700px", flex: 1, marginLeft: window.innerWidth < 768 ? "0" : "2rem"}}>
+        <div style={{ maxWidth: "700px", flex: 1, marginLeft: window.innerWidth < 768 ? "0" : "2rem" }}>
           <MyTextbox textArea={descVal} setTextArea={setDescVal} />
           {/* <InputTextarea value={descVal} onChange={(e) => setDescVal(e.target.value)} style={{width:'100%' , height:'30rem', resize:'none'}} rows={20}/> */}
           <br />
