@@ -9,6 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Context } from "./utils/context";
+import HomePage from "./components/HomePage";
 
 // Remove the context from this file.
 // Import the context from a new file instead.
@@ -34,7 +35,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate replace to={formattedDate} />} />
+          {/* <Route path="/" element={<Navigate replace to={formattedDate} />} /> */}
+          <Route path="/" element={<HomePage />} />
           <Route
             path="/:date"
             element={
