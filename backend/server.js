@@ -99,6 +99,17 @@ app.post("/upload", checkAuth, upload.single("image"), async (req, res) => {
   return res.status(200).json(obj);
 });
 
+// Upload doodle image: store in Cloudinary and return URL, do not mutate DB records
+app.post("/upload-doodle", checkAuth, upload.single("image"), async (req, res) => {
+  try {
+    // Using multer-storage-cloudinary, uploaded file is already at req.file.path (Cloudinary URL)
+    return res.status(200).json({ image: req.file.path });
+  } catch (e) {
+    console.error("Failed to upload doodle", e);
+    return res.status(500).json({ message: "Failed to upload doodle" });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send(`Server Running Fine... <br> <br>${mongoResponse}`);
 });
